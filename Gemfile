@@ -24,5 +24,5 @@ group :test do
   gem 'database_cleaner', '~> 1.1.1'
   gem 'factory_girl_rails', '~> 4.2.1'
   gem 'shoulda-matchers', require: false
+  gem 'timecop', '~> 0.6.3'
 end
-

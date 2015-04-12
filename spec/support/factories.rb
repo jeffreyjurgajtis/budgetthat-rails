@@ -4,4 +4,10 @@ FactoryGirl.define do
     password 'password'
     password_confirmation { |u| u.password }
   end
+
+  factory :api_key do
+    access_token SecureRandom.hex
+    expired_at Time.zone.tomorrow
+    user
+  end
 end

@@ -7,4 +7,8 @@ RSpec.describe User, type: :model do
     it { should allow_value("email@example.com").for :email }
     it { should_not allow_value("example.com").for :email }
   end
+
+  describe "associations" do
+    it { should have_many :api_keys }
+  end
 end

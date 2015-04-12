@@ -2,27 +2,27 @@ source 'https://rubygems.org'
 
 
 gem 'rails', '4.2.1'
+gem 'rails-api', '~> 0.4.0'
+gem 'pg', '~> 0.18.1'
+gem 'puma', '~> 2.11.1'
+gem 'bcrypt', '~> 3.1.7'
+gem 'active_model_serializers', '~> 0.9.3'
 
-gem 'rails-api'
+group :development do
+  gem 'spring'
+  gem 'spring-commands-rspec', '~> 1.0'
+  gem 'guard-rspec', '~> 4.2'
+  gem 'rb-fsevent', '~> 0.9'
+end
 
-gem 'spring', :group => :development
+group :development, :test do
+  gem 'rspec-rails', '~> 3.2.1'
+  gem 'pry-rails', '~> 0.3.4'
+end
 
+group :test do
+  gem 'database_cleaner', '~> 1.1.1'
+  gem 'factory_girl_rails', '~> 4.2.1'
+  gem 'shoulda-matchers', require: false
+end
 
-gem 'pg'
-
-
-
-# To use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
-
-# To use Jbuilder templates for JSON
-# gem 'jbuilder'
-
-# Use unicorn as the app server
-# gem 'unicorn'
-
-# Deploy with Capistrano
-# gem 'capistrano', :group => :development
-
-# To use debugger
-# gem 'ruby-debug19', :require => 'ruby-debug'

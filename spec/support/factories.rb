@@ -15,4 +15,10 @@ FactoryGirl.define do
     name "February 2017"
     user
   end
+
+  factory :category do
+    name "Coffee House"
+    budget_amount 25.00
+    budget_sheet
+  end
 end

@@ -6,7 +6,7 @@ gem 'rails-api', '~> 0.4.0'
 gem 'pg', '~> 0.18.1'
 gem 'puma', '~> 2.11.1'
 gem 'bcrypt', '~> 3.1.7'
-gem 'active_model_serializers', '~> 0.9.3'
+gem 'active_model_serializers', '~> 0.8.0'
 
 group :development do
   gem 'spring'

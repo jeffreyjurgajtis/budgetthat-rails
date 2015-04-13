@@ -10,4 +10,9 @@ FactoryGirl.define do
     expired_at Time.zone.tomorrow
     user
   end
+
+  factory :budget_sheet do
+    name "February 2017"
+    user
+  end
 end

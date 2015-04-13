@@ -1,5 +1,5 @@
 class V1::BudgetSheetsController < ApplicationController
-  before_action :ensure_budget_sheet_belongs_to_user, only: [:show, :destroy]
+  before_action :ensure_budget_sheet_belongs_to_user, except: [:index, :create]
 
   def index
     render json: current_user.budget_sheets.created_at_asc
@@ -17,6 +17,14 @@ class V1::BudgetSheetsController < ApplicationController
 
   def show
     render json: budget_sheet
+  end
+
+  def update
+    if budget_sheet.update budget_sheet_params
+      render json: budget_sheet
+    else
+      render json: { errors: budget_sheet.errors }, status: 400
+    end
   end
 
   def destroy

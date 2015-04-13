@@ -101,8 +101,66 @@ describe V1::CategoriesController do
   end
 
   describe "PUT update" do
+    before { set_access_token_header user.session_api_key.access_token }
+
+    context "success" do
+      let(:budget_sheet) { create :budget_sheet, user: user }
+
+      it "returns status 200" do
+        category = create :category, budget_sheet: budget_sheet
+        put :update, id: category.id, category: { name: "Coffee" }
+        expect(response).to have_http_status 200
+      end
+    end
+
+    context "failure" do
+      let(:budget_sheet) { create :budget_sheet, user: user }
+
+      it "returns status 400" do
+        category = create :category, budget_sheet: budget_sheet
+        put :update, id: category.id, category: { name: "" }
+        expect(response).to have_http_status 400
+      end
+    end
+
+    context "forbidden" do
+      let(:budget_sheet) { create :budget_sheet }
+
+      it "returns status 403" do
+        category = create :category, budget_sheet: budget_sheet
+        put :update, id: category.id, category: { name: "Coffee" }
+        expect(response).to have_http_status 403
+      end
+    end
   end
 
   describe "DELETE destroy" do
+    before { set_access_token_header user.session_api_key.access_token }
+
+    context "success" do
+      let(:budget_sheet) { create :budget_sheet, user: user }
+      let!(:category) { create :category, budget_sheet: budget_sheet }
+
+      it "returns status 204" do
+        delete :destroy, id: category.id
+        expect(response).to have_http_status 204
+      end
+
+      it "deletes" do
+        expect do
+          delete :destroy, id: category.id
+        end.to change { Category.count }.by -1
+      end
+    end
+
+    context "forbidden" do
+      let(:budget_sheet) { create :budget_sheet }
+
+      it "returns status 403" do
+        category = create :category, budget_sheet: budget_sheet
+        delete :destroy, id: category.id
+        expect(response).to have_http_status 403
+      end
+    end
   end
 end

@@ -81,6 +81,28 @@ describe V1::BudgetSheetsController do
     end
   end
 
+  describe "PUT update" do
+    before { set_access_token_header user.session_api_key.access_token }
+
+    context "success" do
+      let(:budget_sheet) { create :budget_sheet, user: user }
+
+      it "returns status 200" do
+        put :update, id: budget_sheet.id, budget_sheet: { name: "Feb" }
+        expect(response).to have_http_status 200
+      end
+    end
+
+    context "forbidden" do
+      let(:budget_sheet) { create :budget_sheet }
+
+      it "returns status 403" do
+        put :update, id: budget_sheet.id, budget_sheet: { name: "Feb" }
+        expect(response).to have_http_status 403
+      end
+    end
+  end
+
   describe "DELETE destroy" do
     before { set_access_token_header user.session_api_key.access_token }
 

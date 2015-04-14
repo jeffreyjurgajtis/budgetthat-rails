@@ -21,4 +21,11 @@ FactoryGirl.define do
     budget_amount 25.00
     budget_sheet
   end
+
+  factory :entry do
+    description "Local Coffee"
+    occurred_on Time.zone.yesterday
+    amount 5.40
+    category
+  end
 end

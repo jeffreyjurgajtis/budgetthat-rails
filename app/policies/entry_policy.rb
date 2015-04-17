@@ -1,15 +1,18 @@
 class EntryPolicy < ApplicationPolicy
   def update?
-    record.category.budget_sheet.user_id == user.id
+    budget_sheet_belongs_to_user?
   end
 
   def destroy?
-    record.category.budget_sheet.user_id == user.id
+    budget_sheet_belongs_to_user?
   end
 
-  class Scope < Scope
-    def resolve
-      scope
-    end
+  private
+
+  def budget_sheet_belongs_to_user?
+    User.joins(budget_sheets: { categories: :entries })
+      .where(entries: { id: record.id })
+      .where(id: user.id)
+      .exists?
   end
 end

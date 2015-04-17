@@ -1,27 +1,27 @@
 class BudgetSheetPolicy < ApplicationPolicy
   def index?
-    record.user_id == user.id
+    belongs_to_user?
   end
 
   def create?
-    record.user_id == user.id
+    belongs_to_user?
   end
 
   def show?
-    record.user_id == user.id
+    belongs_to_user?
   end
 
   def update?
-    record.user_id == user.id
+    belongs_to_user?
   end
 
   def destroy?
-    record.user_id == user.id
+    belongs_to_user?
   end
 
-  class Scope < Scope
-    def resolve
-      scope
-    end
+  private
+
+  def belongs_to_user?
+    record.user_id == user.id
   end
 end

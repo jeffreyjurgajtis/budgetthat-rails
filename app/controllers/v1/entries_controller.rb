@@ -1,4 +1,6 @@
 class V1::EntriesController < ApplicationController
+  before_action :authorize_category, only: :create
+  before_action :authorize_entry, except: :create
 
   def create
     entry = category.entries.new entry_params
@@ -35,5 +37,13 @@ class V1::EntriesController < ApplicationController
 
   def entry_params
     params.require(:entry).permit(:description, :occurred_on, :amount)
+  end
+
+  def authorize_category
+    authorize category
+  end
+
+  def authorize_entry
+    authorize entry
   end
 end

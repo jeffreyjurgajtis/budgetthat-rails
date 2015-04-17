@@ -1,6 +1,6 @@
 class V1::CategoriesController < ApplicationController
-  before_action :ensure_budget_sheet_belongs_to_user, only: [:index, :create]
-  before_action :ensure_category_belongs_to_user, only: [:update, :destroy]
+  before_action :authorize_budget_sheet, only: [:index, :create]
+  before_action :authorize_category, only: [:update, :destroy]
 
   def index
     render json: budget_sheet.categories.created_at_asc
@@ -43,11 +43,11 @@ class V1::CategoriesController < ApplicationController
     params.require(:category).permit :name, :budget_amount
   end
 
-  def ensure_budget_sheet_belongs_to_user
-    head 403 unless budget_sheet.user_id == current_user.id
+  def authorize_budget_sheet
+    authorize budget_sheet
   end
 
-  def ensure_category_belongs_to_user
-    head 403 unless category.budget_sheet.user_id == current_user.id
+  def authorize_category
+    authorize category
   end
 end

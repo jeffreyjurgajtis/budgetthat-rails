@@ -1,4 +1,12 @@
 class BudgetSheetPolicy < ApplicationPolicy
+  def index?
+    record.user_id == user.id
+  end
+
+  def create?
+    record.user_id == user.id
+  end
+
   def show?
     record.user_id == user.id
   end

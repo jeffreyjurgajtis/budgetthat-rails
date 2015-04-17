@@ -1,5 +1,5 @@
 class V1::BudgetSheetsController < ApplicationController
-  before_action :ensure_budget_sheet_belongs_to_user, except: [:index, :create]
+  before_action :authorize_budget_sheet, only: [:show, :update, :destroy]
 
   def index
     render json: current_user.budget_sheets.created_at_asc
@@ -42,7 +42,7 @@ class V1::BudgetSheetsController < ApplicationController
     params.require(:budget_sheet).permit :name
   end
 
-  def ensure_budget_sheet_belongs_to_user
-    head 403 unless budget_sheet.user_id == current_user.id
+  def authorize_budget_sheet
+    authorize budget_sheet
   end
 end

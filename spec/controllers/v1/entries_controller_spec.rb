@@ -13,7 +13,7 @@ describe V1::EntriesController, type: :controller do
         {
           description: "Local Coffee",
           occurred_on: Time.zone.tomorrow,
-          amount: 12.12
+          amount: 1212
         }
       end
 
@@ -55,7 +55,7 @@ describe V1::EntriesController, type: :controller do
         {
           description: "Local Coffee",
           occurred_on: Time.zone.tomorrow,
-          amount: 12.12
+          amount: 1212
         }
       end
 
@@ -80,7 +80,7 @@ describe V1::EntriesController, type: :controller do
         {
           description: "Local Coffee",
           occurred_on: Time.zone.tomorrow,
-          amount: 12.12
+          amount: 1212
         }
       end
 
@@ -101,7 +101,7 @@ describe V1::EntriesController, type: :controller do
       let!(:random_entry) { create :entry }
 
       it "returns status 403" do
-        put :update, id: random_entry.id, entry: { amount: 200.00 }
+        put :update, id: random_entry.id, entry: { amount: 20000 }
         expect(response).to have_http_status 403
       end
     end

@@ -52,7 +52,7 @@ describe V1::CategoriesController do
       let(:valid_attrs) do
         {
           name: "Coffee House",
-          budget_amount: 25.00
+          budget_amount: 2500
         }
       end
 
@@ -74,7 +74,7 @@ describe V1::CategoriesController do
       let(:invalid_attrs) do
         {
           name: "",
-          budget_amount: 25.00
+          budget_amount: 2500
         }
       end
 

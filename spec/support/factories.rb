@@ -18,14 +18,14 @@ FactoryGirl.define do
 
   factory :category do
     name "Coffee House"
-    budget_amount 25.00
+    budget_amount 2500
     budget_sheet
   end
 
   factory :entry do
     description "Local Coffee"
     occurred_on Time.zone.yesterday
-    amount 5.40
+    amount 540
     category
   end
 end

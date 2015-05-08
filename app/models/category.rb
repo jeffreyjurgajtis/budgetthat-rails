@@ -2,7 +2,8 @@ class Category < ActiveRecord::Base
   belongs_to :budget_sheet
   has_many :entries, dependent: :restrict_with_error
 
-  validates_presence_of :budget_sheet, :budget_amount, :name
+  validates_presence_of :budget_sheet, :name
+  validates_numericality_of :budget_amount, greater_than_or_equal_to: 0
 
   scope :created_at_asc, -> { order created_at: :asc }
 end

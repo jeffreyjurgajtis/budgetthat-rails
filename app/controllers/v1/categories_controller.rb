@@ -1,13 +1,9 @@
 class V1::CategoriesController < ApplicationController
-  before_action :authorize_budget_sheet, only: [:index, :create]
+  before_action :authorize_budget_sheet, only: [:create]
   before_action :authorize_category, only: [:update, :destroy]
 
-  def index
-    render json: budget_sheet.categories.created_at_asc
-  end
-
   def create
-    category = budget_sheet.categories.new category_params
+    category = Category.new category_params
 
     if category.save
       render json: category, status: 201
@@ -32,7 +28,7 @@ class V1::CategoriesController < ApplicationController
   private
 
   def budget_sheet
-    @budget_sheet ||= BudgetSheet.find params[:budget_sheet_id]
+    @budget_sheet ||= BudgetSheet.where(id: budget_sheet_id).first_or_initialize
   end
 
   def category
@@ -40,7 +36,11 @@ class V1::CategoriesController < ApplicationController
   end
 
   def category_params
-    params.require(:category).permit :name, :budget_amount
+    params.require(:category).permit(:name, :budget_amount, :budget_sheet_id)
+  end
+
+  def budget_sheet_id
+    params.require(:category)[:budget_sheet_id]
   end
 
   def authorize_budget_sheet

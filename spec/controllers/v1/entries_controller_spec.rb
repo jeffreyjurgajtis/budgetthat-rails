@@ -7,24 +7,25 @@ describe V1::EntriesController, type: :controller do
 
   before { set_access_token_header user.session_api_key.access_token }
 
-  describe "POST create" do
+  describe "POST create", :focus do
     context "success" do
       let(:valid_params) do
         {
           description: "Local Coffee",
           occurred_on: Time.zone.tomorrow,
-          amount: 1212
+          amount: 1212,
+          category_id: category.id
         }
       end
 
       it "returns status 201" do
-        post :create, category_id: category.id, entry: valid_params
+        post :create, entry: valid_params
         expect(response).to have_http_status 201
       end
 
       it "persists" do
         expect do
-          post :create, category_id: category.id, entry: valid_params
+          post :create, entry: valid_params
         end.to change { Entry.count }.by 1
       end
     end
@@ -33,17 +34,20 @@ describe V1::EntriesController, type: :controller do
       let(:invalid_params) do
         {
           description: "Local Coffee",
+          occurred_on: Time.zone.tomorrow,
+          amount: nil,
+          category_id: category.id
         }
       end
 
       it "returns status 400" do
-        post :create, category_id: category.id, entry: invalid_params
+        post :create, entry: invalid_params
         expect(response).to have_http_status 400
       end
 
       it "persists" do
         expect do
-          post :create, category_id: category.id, entry: invalid_params
+          post :create, entry: invalid_params
         end.to_not change { Entry.count }
       end
     end
@@ -55,18 +59,19 @@ describe V1::EntriesController, type: :controller do
         {
           description: "Local Coffee",
           occurred_on: Time.zone.tomorrow,
-          amount: 1212
+          amount: 1212,
+          category_id: random_category.id
         }
       end
 
       it "returns status 403" do
-        post :create, category_id: random_category.id, entry: valid_params
+        post :create, entry: valid_params
         expect(response).to have_http_status 403
       end
 
       it "does not persist" do
         expect do
-          post :create, category_id: random_category.id, entry: valid_params
+          post :create, entry: valid_params
         end.to_not change { Entry.count }
       end
     end

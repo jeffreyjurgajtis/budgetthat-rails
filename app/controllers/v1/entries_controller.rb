@@ -1,9 +1,9 @@
 class V1::EntriesController < ApplicationController
-  before_action :authorize_category, only: :create
+  # before_action :authorize_category, only: :create
   before_action :authorize_entry, except: :create
 
   def create
-    entry = category.entries.new entry_params
+    entry = Entry.new entry_params
 
     if entry.save
       render json: entry, status: 201
@@ -36,7 +36,8 @@ class V1::EntriesController < ApplicationController
   end
 
   def entry_params
-    params.require(:entry).permit(:description, :occurred_on, :amount)
+    params.require(:entry)
+      .permit(:description, :occurred_on, :amount, :category_id)
   end
 
   def authorize_category

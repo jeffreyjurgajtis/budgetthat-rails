@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     end
 
     resources :categories, except: [:index, :new, :edit, :show]
+    resources :entries, only: [:create]
 
     resources :sessions, only: :create
     resources :users, only: :create

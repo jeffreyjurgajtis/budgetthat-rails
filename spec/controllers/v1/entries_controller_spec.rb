@@ -7,7 +7,7 @@ describe V1::EntriesController, type: :controller do
 
   before { set_access_token_header user.session_api_key.access_token }
 
-  describe "POST create", :focus do
+  describe "POST create" do
     context "success" do
       let(:valid_params) do
         {
@@ -85,7 +85,8 @@ describe V1::EntriesController, type: :controller do
         {
           description: "Local Coffee",
           occurred_on: Time.zone.tomorrow,
-          amount: 1212
+          amount: 1212,
+          category_id: category.id
         }
       end
 

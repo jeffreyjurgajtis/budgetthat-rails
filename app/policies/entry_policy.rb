@@ -1,4 +1,11 @@
 class EntryPolicy < ApplicationPolicy
+  def create?
+    User.joins(budget_sheets: :categories)
+      .where(categories: { id: record.category_id })
+      .where(id: user.id)
+      .exists?
+  end
+
   def update?
     budget_sheet_belongs_to_user?
   end

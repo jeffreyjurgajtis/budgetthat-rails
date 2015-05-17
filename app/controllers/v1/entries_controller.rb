@@ -1,5 +1,4 @@
 class V1::EntriesController < ApplicationController
-
   def create
     entry = Entry.new entry_params
 
@@ -13,6 +12,8 @@ class V1::EntriesController < ApplicationController
   end
 
   def update
+    authorize(entry)
+
     if entry.update entry_params
       render json: entry, status: 200
     else
@@ -21,6 +22,8 @@ class V1::EntriesController < ApplicationController
   end
 
   def destroy
+    authorize(entry)
+
     entry.destroy!
     render nothing: true, status: 204
   end
@@ -38,9 +41,5 @@ class V1::EntriesController < ApplicationController
       :amount,
       :category_id
     )
-  end
-
-  def authorize_entry
-    authorize entry
   end
 end

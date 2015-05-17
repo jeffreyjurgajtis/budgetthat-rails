@@ -1,6 +1,9 @@
 class CategoryPolicy < ApplicationPolicy
   def create?
-    category_budget_sheet_belongs_to_user?
+    User.joins(:budget_sheets)
+      .where(budget_sheets: { id: record.budget_sheet })
+      .where(id: user.id)
+      .exists?
   end
 
   def update?

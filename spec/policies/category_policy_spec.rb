@@ -8,13 +8,15 @@ RSpec.describe CategoryPolicy do
   let(:random_user) { create :user }
 
   describe "#create?" do
+    let(:new_category) { build :category, budget_sheet: budget_sheet }
+
     it "returns true when user owns budget sheet" do
-      policy = CategoryPolicy.new(user, category)
+      policy = CategoryPolicy.new(user, new_category)
       expect(policy.create?).to eq true
     end
 
     it "returns false when user is unknown" do
-      policy = CategoryPolicy.new(random_user, category)
+      policy = CategoryPolicy.new(random_user, new_category)
       expect(policy.create?).to eq false
     end
   end

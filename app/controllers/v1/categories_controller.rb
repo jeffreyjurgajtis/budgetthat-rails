@@ -1,4 +1,12 @@
 class V1::CategoriesController < ApplicationController
+  def index
+    budget_sheet = BudgetSheet.find(params[:budget_sheet_id])
+
+    authorize(budget_sheet)
+
+    render json: budget_sheet.categories.created_at_asc
+  end
+
   def create
     category = Category.new category_params
 
@@ -9,6 +17,12 @@ class V1::CategoriesController < ApplicationController
     else
       render json: { errors: category.errors }, status: 400
     end
+  end
+
+  def show
+    authorize(category)
+
+    render json: category
   end
 
   def update
@@ -35,6 +49,9 @@ class V1::CategoriesController < ApplicationController
   end
 
   def category_params
-    params.require(:category).permit(:name, :budget_amount, :budget_sheet_id)
+    params
+      .require(:category)
+      .permit(:name, :budget_amount)
+      .merge!(budget_sheet_id: params[:category][:budget_sheet])
   end
 end

@@ -6,7 +6,7 @@ gem 'rails-api', '~> 0.4.0'
 gem 'pg', '~> 0.18.1'
 gem 'puma', '~> 2.11.1'
 gem 'bcrypt', '~> 3.1.7'
-gem 'active_model_serializers', '~> 0.8.0'
+gem 'active_model_serializers', '0.10.0.rc3'
 gem 'pundit', '~> 0.3.0'
 gem 'rack-cors', require: 'rack/cors'
 

@@ -4,5 +4,5 @@ class BudgetSheet < ActiveRecord::Base
 
   validates_presence_of :name, :user
 
-  scope :created_at_asc, ->{ order created_at: :asc }
+  scope :created_at_desc, ->{ order created_at: :desc }
 end

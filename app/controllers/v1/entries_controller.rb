@@ -35,11 +35,9 @@ class V1::EntriesController < ApplicationController
   end
 
   def entry_params
-    params.require(:entry).permit(
-      :description,
-      :occurred_on,
-      :amount,
-      :category_id
-    )
+    params
+      .require(:entry)
+      .permit(:description, :occurred_on, :amount, :category_id)
+      .merge!(category_id: params[:entry][:category])
   end
 end

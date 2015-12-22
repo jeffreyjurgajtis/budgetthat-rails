@@ -2,7 +2,7 @@ class V1::BudgetSheetsController < ApplicationController
   before_action :authorize_budget_sheet, only: [:show, :update, :destroy]
 
   def index
-    render json: current_user.budget_sheets.created_at_asc
+    render json: current_user.budget_sheets.created_at_desc
   end
 
   def create
@@ -35,11 +35,11 @@ class V1::BudgetSheetsController < ApplicationController
   private
 
   def budget_sheet
-    @budget_sheet ||= BudgetSheet.find params[:id]
+    @budget_sheet ||= BudgetSheet.find(params[:id])
   end
 
   def budget_sheet_params
-    params.require(:budget_sheet).permit :name
+    params.require(:budget_sheet).permit(:name, :created_at)
   end
 
   def authorize_budget_sheet

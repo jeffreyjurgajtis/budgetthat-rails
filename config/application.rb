@@ -34,7 +34,10 @@ module PearApi
 
     config.middleware.insert_before 0, "Rack::Cors" do
       allow do
-        origins('http://localhost:4200')
+        origins(
+          'http://localhost:4200',
+          'http://budjet-app.s3-website-us-east-1.amazonaws.com'
+        )
 
         resource('*',
           headers: :any,

@@ -28,3 +28,7 @@ group :test do
   gem 'shoulda-matchers', require: false
   gem 'timecop', '~> 0.6.3'
 end
+
+group :production do
+  gem 'rails_12factor'
+end

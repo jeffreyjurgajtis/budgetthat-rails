@@ -13,7 +13,7 @@ describe V1::CategoriesController do
         {
           name: "Coffee House",
           budget_amount: 2500,
-          budget_sheet_id: budget_sheet.id
+          budget_sheet: budget_sheet.id
         }
       end
 
@@ -36,7 +36,7 @@ describe V1::CategoriesController do
         {
           name: "",
           budget_amount: 2500,
-          budget_sheet_id: budget_sheet.id
+          budget_sheet: budget_sheet.id
         }
       end
 
@@ -59,7 +59,7 @@ describe V1::CategoriesController do
         {
           name: "May 2015",
           budget_amount: 2500,
-          budget_sheet_id: budget_sheet.id
+          budget_sheet: budget_sheet.id
         }
       end
 

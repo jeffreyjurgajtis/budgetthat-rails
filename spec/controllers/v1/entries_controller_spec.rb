@@ -14,7 +14,7 @@ describe V1::EntriesController, type: :controller do
           description: "Local Coffee",
           occurred_on: Time.zone.tomorrow,
           amount: 1212,
-          category_id: category.id
+          category: category.id
         }
       end
 
@@ -36,7 +36,7 @@ describe V1::EntriesController, type: :controller do
           description: "Local Coffee",
           occurred_on: Time.zone.tomorrow,
           amount: nil,
-          category_id: category.id
+          category: category.id
         }
       end
 
@@ -60,7 +60,7 @@ describe V1::EntriesController, type: :controller do
           description: "Local Coffee",
           occurred_on: Time.zone.tomorrow,
           amount: 1212,
-          category_id: random_category.id
+          category: random_category.id
         }
       end
 
@@ -86,7 +86,7 @@ describe V1::EntriesController, type: :controller do
           description: "Local Coffee",
           occurred_on: Time.zone.tomorrow,
           amount: 1212,
-          category_id: category.id
+          category: category.id
         }
       end
 

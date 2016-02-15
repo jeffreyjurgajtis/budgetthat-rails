@@ -3,7 +3,7 @@ require "rails_helper"
 describe V1::SessionsController do
   describe 'POST create' do
     let(:password) { 'password' }
-    let!(:user) { create(:user, password: password) }
+    let(:user)     { create(:user, password: password) }
 
     context 'created' do
       it 'returns status 201' do

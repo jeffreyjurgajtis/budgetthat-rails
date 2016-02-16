@@ -1,41 +1,29 @@
 require "rails_helper"
 
 describe ApiKeyGenerator do
-  describe '#first_or_create' do
-    let!(:user) { create :user }
+  describe '#token!' do
+    it "returns a token" do
+      user = create :user
+      generator = ApiKeyGenerator.new(user_id: user.id)
 
-    before { Timecop.freeze }
-    after  { Timecop.return }
-
-    context 'when an active key exists' do
-      let!(:api_key) { create(:api_key,
-                              user_id: user.id,
-                              expired_at: 2.hours.from_now) }
-
-      it 'returns the existing api key' do
-        result = ApiKeyGenerator.new(user.id).first_or_create
-        expect(result).to eq api_key
-      end
+      expect(generator.token!).to be_a String
     end
 
-    context 'when no active key exists' do
-      before { create :api_key, user_id: user.id, expired_at: 10.hours.ago }
+    it "creates an ApiKey" do
+      user = create :user
+      generator = ApiKeyGenerator.new(user_id: user.id)
 
-      it 'returns a new api key' do
-        expect do
-          ApiKeyGenerator.new(user.id).first_or_create
-        end.to change { ApiKey.count }.by 1
-      end
+      expect do
+        generator.token!
+      end.to change { user.api_keys.count }.by 1
+    end
 
-      it 'sets expired at' do
-        result = ApiKeyGenerator.new(user.id).first_or_create
-        expect(result.expired_at).to eq ApiKey::TIME_TO_LIVE.from_now
-      end
+    it "raises an exception when invalid user_id id passed" do
+      generator = ApiKeyGenerator.new(user_id: nil)
 
-      it 'sets access token' do
-        result = ApiKeyGenerator.new(user.id).first_or_create
-        expect(result.access_token =~ /\S{32}/).to be
-      end
+      expect do
+        generator.token!
+      end.to raise_error ActiveRecord::RecordInvalid
     end
   end
 end

@@ -6,7 +6,7 @@ RSpec.describe ApiKey, type: :model do
   end
 
   describe "validations" do
-    it { should validate_presence_of :access_token }
+    it { should validate_presence_of :secret }
     it { should validate_presence_of :user }
     it { should validate_presence_of :expired_at }
   end

@@ -4,7 +4,7 @@ describe V1::CategoriesController do
   let(:user) { create :user }
 
   describe "POST create" do
-    before { set_access_token_header user.session_api_key.access_token }
+    before { set_auth_headers(user) }
 
     context "success" do
       let(:budget_sheet) { create :budget_sheet, user: user }
@@ -71,7 +71,7 @@ describe V1::CategoriesController do
   end
 
   describe "PUT update" do
-    before { set_access_token_header user.session_api_key.access_token }
+    before { set_auth_headers(user) }
 
     context "success" do
       let(:budget_sheet) { create :budget_sheet, user: user }
@@ -105,7 +105,7 @@ describe V1::CategoriesController do
   end
 
   describe "DELETE destroy" do
-    before { set_access_token_header user.session_api_key.access_token }
+    before { set_auth_headers(user) }
 
     context "success" do
       let(:budget_sheet) { create :budget_sheet, user: user }

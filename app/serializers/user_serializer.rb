@@ -1,7 +1,7 @@
 class UserSerializer < ActiveModel::Serializer
-  attributes :email, :access_token
+  attributes :email, :token
 
-  def access_token
-    object.session_api_key.access_token
+  def token
+    ApiKeyGenerator.new(user_id: object.id).token!
   end
 end

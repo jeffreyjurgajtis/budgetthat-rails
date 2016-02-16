@@ -1,29 +1,23 @@
 class ApiKeyGenerator
-  attr_reader :user_id
-
-  def initialize(user_id)
+  def initialize(user_id:)
     @user_id = user_id
+    @token   = SecureRandom.hex
   end
 
-  def first_or_create
-    ApiKey.where(user_id: user_id).active.first || create
+  def token!
+    create_api_key!
+    token
   end
 
   private
 
-  def create
-    ApiKey.create(
-      access_token: access_token,
-      expired_at: ApiKey::TIME_TO_LIVE.from_now,
+  attr_reader :user_id, :token
+
+  def create_api_key!
+    ApiKey.create!(
+      secret: BCrypt::Password.create(token),
+      expired_at: Time.zone.now.advance(hours: ApiKey::TIME_TO_LIVE),
       user_id: user_id
     )
-  end
-
-  def access_token
-    begin
-      new_token = SecureRandom.hex
-    end while ApiKey.exists?(access_token: new_token)
-
-    new_token
   end
 end

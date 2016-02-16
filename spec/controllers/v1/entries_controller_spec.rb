@@ -5,7 +5,7 @@ describe V1::EntriesController, type: :controller do
   let(:budget_sheet) { create :budget_sheet, user: user }
   let(:category) { create :category, budget_sheet: budget_sheet }
 
-  before { set_access_token_header user.session_api_key.access_token }
+  before { set_auth_headers(user) }
 
   describe "POST create" do
     context "success" do

@@ -6,7 +6,7 @@ FactoryGirl.define do
   end
 
   factory :api_key do
-    access_token SecureRandom.hex
+    secret BCrypt::Password.create(SecureRandom.hex)
     expired_at Time.zone.tomorrow
     user
   end

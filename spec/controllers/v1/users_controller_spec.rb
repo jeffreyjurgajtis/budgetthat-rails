@@ -23,9 +23,9 @@ describe V1::UsersController do
         expect(json['user']).to be_present
       end
 
-      it 'returns an access token' do
+      it 'returns a token' do
         post :create, user: user_params
-        expect(json['user']['access_token']).to be_present
+        expect(json['user']['token']).to be_present
       end
     end
 

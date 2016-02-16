@@ -8,22 +8,26 @@ class ApplicationController < ActionController::API
   protected
 
   def authenticate_user!
-    head 401 unless current_user
+    head 401 unless authentication.success?
   end
 
   def user_forbidden!
     head 403
   end
 
+  def authentication
+    @authentication ||= Authentication.new(email: email, token: token)
+  end
+
   def current_user
-    @current_user ||= api_key.try(:user)
+    authentication.user
   end
 
-  def api_key
-    ApiKey.active.find_by_access_token(access_token_from_header)
+  def email
+    request.headers['X-USER-EMAIL']
   end
 
-  def access_token_from_header
-    request.headers['X-ACCESS-TOKEN']
+  def token
+    request.headers['X-USER-TOKEN']
   end
 end

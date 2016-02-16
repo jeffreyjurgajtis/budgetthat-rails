@@ -5,11 +5,11 @@ class Authentication
   end
 
   def success?
-    api_key.present? && BCrypt::Password.new(api_key.secret) == token
+    api_key.present?
   end
 
   def user
-    @user ||= User.find_by(email: email)
+    @user ||= User.where(email: email).first_or_initialize
   end
 
   private
@@ -17,6 +17,8 @@ class Authentication
   attr_reader :email, :token
 
   def api_key
-    @api_key ||= ApiKey.active.where(user: user).created_at_desc.first
+    user.api_keys.active.created_at_desc.find do |key|
+      BCrypt::Password.new(key.secret) == token
+    end
   end
 end

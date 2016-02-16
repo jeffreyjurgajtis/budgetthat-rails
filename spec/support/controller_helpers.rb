@@ -6,11 +6,11 @@ module Controllers
   end
 
   module AuthHelpers
-    def set_auth_headers(user, token = nil)
-      token ||= ApiKeyGenerator.new(user_id: user.id).token!
+    def set_auth_headers(user)
+      result = CreateApiKey.new(user_id: user.id).create!
 
       request.headers['X-USER-EMAIL'] = user.email
-      request.headers['X-USER-TOKEN'] = token
+      request.headers['X-USER-TOKEN'] = result.token
     end
   end
 end

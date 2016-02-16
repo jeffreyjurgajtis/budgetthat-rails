@@ -1,6 +1,4 @@
 class ApiKey < ActiveRecord::Base
-  TIME_TO_LIVE = 24
-
   belongs_to :user
 
   validates_presence_of :user, :expired_at, :secret

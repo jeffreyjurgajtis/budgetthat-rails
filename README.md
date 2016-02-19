@@ -1,4 +1,19 @@
-Pear API
---------
+## BudJet API
 
-A `rails-api` JSON API developed for a [budgeting application](https://github.com/jeffreyjurgajtis/pear-client)
+A Rails JSON API used to run [BudJet](http://budjet-app.s3-website-us-east-1.amazonaws.com/), a simple spreadsheet budgeting app.
+
+### Setup
+
+```
+$ bundle install
+```
+
+```
+$ rake db:create db:migrate
+```
+
+### Tests
+
+```
+$ rspec
+```

@@ -45,7 +45,7 @@ describe V1::UsersController do
 
       it 'returns errors' do
         post :create, user: user_params
-        expect(json['errors']).to be_present
+        expect(json['error']).to be_present
       end
     end
   end

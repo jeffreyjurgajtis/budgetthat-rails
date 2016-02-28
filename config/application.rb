@@ -36,7 +36,7 @@ module PearApi
       allow do
         origins(
           'http://localhost:4200',
-          'http://budjet-app.s3-website-us-east-1.amazonaws.com'
+          'http://budgetthat.s3-website-us-east-1.amazonaws.com'
         )
 
         resource('*',

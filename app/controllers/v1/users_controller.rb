@@ -9,7 +9,7 @@ class V1::UsersController < ApplicationController
 
       render json: registration.user, token: result.token, status: 201
     else
-      render json: { error: registration.error_message }, status: 400
+      render json: { errors: [registration.error_message] }, status: 400
     end
   end
 

@@ -1,7 +1,7 @@
 class CreateApiKey
   Result = Struct.new(:api_key, :token)
 
-  TIME_TO_LIVE = 48
+  TIME_TO_LIVE = 168
 
   def initialize(user_id:)
     @user_id = user_id

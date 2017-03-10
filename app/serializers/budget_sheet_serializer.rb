@@ -1,7 +1,7 @@
 class BudgetSheetSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
 
-  attributes :id, :name, :created_at, :links
+  attributes :id, :name, :created_at, :income, :links
 
   def links
     { categories: budget_sheet_categories_path(object.id) }

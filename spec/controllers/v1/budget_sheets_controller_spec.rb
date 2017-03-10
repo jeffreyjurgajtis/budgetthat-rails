@@ -34,13 +34,13 @@ describe V1::BudgetSheetsController do
 
     context "success" do
       it "returns status 201" do
-        post :create, budget_sheet: { name: "Feb" }
+        post :create, budget_sheet: { name: "Feb", income: 0 }
         expect(response).to have_http_status 201
       end
 
       it "persists" do
         expect do
-          post :create, budget_sheet: { name: "Feb" }
+          post :create, budget_sheet: { name: "Feb", income: 0 }
         end.to change { BudgetSheet.count }.by 1
       end
     end

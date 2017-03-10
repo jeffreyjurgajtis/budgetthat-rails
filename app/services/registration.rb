@@ -6,7 +6,7 @@ class Registration
   end
 
   def save
-    user.budget_sheets.new(name: "Example Sheet", categories: categories)
+    user.budget_sheets.new(name: "Example Sheet", income: 0, categories: categories)
     user.save
   end
 

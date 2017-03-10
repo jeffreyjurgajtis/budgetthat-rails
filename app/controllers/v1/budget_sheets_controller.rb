@@ -39,7 +39,7 @@ class V1::BudgetSheetsController < ApplicationController
   end
 
   def budget_sheet_params
-    params.require(:budget_sheet).permit(:name, :created_at, :income)
+    params.require(:budget_sheet).permit(:name, :created_at, :income, :display_savings)
   end
 
   def authorize_budget_sheet

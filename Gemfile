@@ -9,6 +9,7 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'active_model_serializers', '0.10.0.rc3'
 gem 'pundit', '~> 0.3.0'
 gem 'rack-cors', require: 'rack/cors'
+gem 'activerecord-import', '>= 0.2.0'
 
 group :development do
   gem 'spring'

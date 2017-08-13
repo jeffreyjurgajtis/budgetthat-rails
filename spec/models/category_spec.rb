@@ -12,15 +12,4 @@ RSpec.describe Category, type: :model do
     it { should belong_to :budget_sheet }
     it { should have_many :entries }
   end
-
-  describe "#destroy" do
-    it "deletes associated entries" do
-      category = create :category
-      entry    = create :entry, category: category
-
-      expect do
-        category.destroy
-      end.to change { Entry.count }.by -1
-    end
-  end
 end

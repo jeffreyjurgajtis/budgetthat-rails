@@ -110,16 +110,38 @@ describe V1::CategoriesController do
     context "success" do
       let(:budget_sheet) { create :budget_sheet, user: user }
       let!(:category) { create :category, budget_sheet: budget_sheet }
+      let!(:entry) { create :entry, category: category }
 
-      it "returns status 204" do
+      it "returns status 200" do
         delete :destroy, id: category.id
-        expect(response).to have_http_status 204
+        expect(response).to have_http_status 200
       end
 
       it "deletes" do
         expect do
           delete :destroy, id: category.id
         end.to change { Category.count }.by -1
+      end
+
+      it "sets nilifys associated entry category_id fields" do
+        delete :destroy, id: category.id
+        expect(entry.reload.category_id).to be_nil
+      end
+
+      it "returns entries in the response payload" do
+        delete :destroy, id: category.id
+        entry_json = json["entries"].map do |entry|
+          entry.slice("id", "category_id")
+        end
+
+        expect(entry_json).to eq(
+          [
+            {
+              "id" => entry.id,
+              "category_id" => nil
+            }
+          ]
+        )
       end
     end
 

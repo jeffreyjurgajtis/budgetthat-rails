@@ -1,7 +1,8 @@
 class EntryPolicy < ApplicationPolicy
   def create?
-    User.joins(budget_sheets: :categories)
-      .where(categories: { id: record.category_id })
+    User
+      .joins(:budget_sheets)
+      .where(budget_sheets: { id: record.budget_sheet_id })
       .where(id: user.id)
       .exists?
   end
@@ -17,7 +18,7 @@ class EntryPolicy < ApplicationPolicy
   private
 
   def budget_sheet_belongs_to_user?
-    User.joins(budget_sheets: { categories: :entries })
+    User.joins(budget_sheets: :entries)
       .where(entries: { id: record.id })
       .where(id: user.id)
       .exists?

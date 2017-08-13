@@ -27,5 +27,6 @@ FactoryGirl.define do
     occurred_on Time.zone.yesterday
     amount 540
     category
+    budget_sheet
   end
 end

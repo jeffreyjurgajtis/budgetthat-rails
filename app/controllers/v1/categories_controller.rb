@@ -37,8 +37,16 @@ class V1::CategoriesController < ApplicationController
   def destroy
     authorize(category)
 
-    category.destroy
-    render nothing: true, status: 204
+    entry_ids = category.entries.pluck(:id)
+
+    if category.destroy
+      entries = Entry.where(id: entry_ids)
+      entries.update_all(category_id: nil)
+
+      render json: { entries: entries, status: 200 }
+    else
+      render json: { errors: category.errors }, status: 400
+    end
   end
 
   private

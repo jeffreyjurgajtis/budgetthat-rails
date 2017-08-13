@@ -3,13 +3,12 @@ require "rails_helper"
 RSpec.describe EntryPolicy do
   let(:user) { create :user }
   let(:budget_sheet) { create :budget_sheet, user: user }
-  let(:category) { create :category, budget_sheet: budget_sheet }
-  let!(:entry) { create :entry, category: category }
+  let!(:entry) { create :entry, budget_sheet: budget_sheet }
 
   let(:random_user) { create :user }
 
   describe "#create?" do
-    let(:new_entry) { build :entry, category: category }
+    let(:new_entry) { build :entry, budget_sheet: budget_sheet }
 
     it "returns true when user owns budget sheet" do
       policy = EntryPolicy.new(user, new_entry)

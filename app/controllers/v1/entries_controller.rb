@@ -1,6 +1,14 @@
 class V1::EntriesController < ApplicationController
+  def index
+    budget_sheet = BudgetSheet.find(params[:budget_sheet_id])
+
+    authorize(budget_sheet)
+
+    render json: budget_sheet.entries.created_at_desc
+  end
+
   def create
-    entry = Entry.new entry_params
+    entry = Entry.new(entry_params)
 
     authorize(entry)
 
@@ -38,6 +46,9 @@ class V1::EntriesController < ApplicationController
     params
       .require(:entry)
       .permit(:description, :occurred_on, :amount, :created_at)
-      .merge!(category_id: params[:entry][:category])
+      .merge!(
+        category_id: params[:entry][:category],
+        budget_sheet_id: params[:entry][:budget_sheet]
+      )
   end
 end

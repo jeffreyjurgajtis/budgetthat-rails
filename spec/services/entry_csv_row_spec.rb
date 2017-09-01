@@ -5,7 +5,7 @@ describe EntryCSVRow do
     it "returns true when amount includes a dash" do
       service = EntryCSVRow.new(
         amount: "-4.32",
-        occurred_on: nil,
+        occurred_on: "10/05/1990",
         description: nil,
         budget_sheet_id: nil,
         history: {}
@@ -17,7 +17,7 @@ describe EntryCSVRow do
     it "returns false when amount does not include a dash" do
       service = EntryCSVRow.new(
         amount: "4.32",
-        occurred_on: nil,
+        occurred_on: "10/05/1990",
         description: nil,
         budget_sheet_id: nil,
         history: {}
@@ -37,7 +37,7 @@ describe EntryCSVRow do
 
       service = EntryCSVRow.new(
         amount: "4.32",
-        occurred_on: nil,
+        occurred_on: Time.zone.today.strftime("%m/%d/%Y"),
         description: nil,
         budget_sheet_id: nil,
         history: history
@@ -55,7 +55,7 @@ describe EntryCSVRow do
 
       service = EntryCSVRow.new(
         amount: "4.32",
-        occurred_on: Time.zone.today,
+        occurred_on: Time.zone.today.strftime("%m/%d/%Y"),
         description: "Gas Station",
         budget_sheet_id: nil,
         history: history
@@ -73,7 +73,7 @@ describe EntryCSVRow do
 
       service = EntryCSVRow.new(
         amount: "4.32",
-        occurred_on: Time.zone.yesterday,
+        occurred_on: Time.zone.yesterday.strftime("%m/%d/%Y"),
         description: "Gas Station",
         budget_sheet_id: nil,
         history: history

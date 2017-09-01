@@ -1,7 +1,7 @@
 class EntryCSVRow
   def initialize(amount:, occurred_on:, description:, budget_sheet_id:, history:)
     @amount          = String(amount)
-    @occurred_on     = occurred_on
+    @occurred_on     = parse_date_string(occurred_on)
     @description     = description
     @budget_sheet_id = budget_sheet_id
     @history         = history
@@ -43,6 +43,12 @@ class EntryCSVRow
   end
 
   def occurred_on_duplicate?(historic_occurred_on)
-    occurred_on.to_date == historic_occurred_on
+    occurred_on == historic_occurred_on
+  end
+
+  def parse_date_string(date)
+    Date.strptime(date, "%m/%d/%Y")
+  rescue => e
+    raise ArgumentError, "invalid date format for #{date}, please use MM/DD/YYYY"
   end
 end

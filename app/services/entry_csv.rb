@@ -61,7 +61,7 @@ class EntryCSV
   end
 
   def find_occurred_on_index
-    csv.headers.find_index { |header| header.downcase.include?("date") }
+    csv.headers.find_index { |header| header.downcase.include?("post date") }
   end
 
   def find_amount_index
@@ -69,7 +69,7 @@ class EntryCSV
   end
 
   def find_description_index
-    csv.headers.find_index { |header| header.downcase.include?("payee") }
+    csv.headers.find_index { |header| header.downcase.in?(%w(payee description)) }
   end
 
   def validate_occurred_on_index

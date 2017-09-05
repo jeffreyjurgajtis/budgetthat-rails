@@ -1,10 +1,19 @@
 class EntryCSVRow
   def initialize(amount:, occurred_on:, description:, budget_sheet_id:, history:)
+    @error_message   = ""
     @amount          = String(amount)
     @occurred_on     = parse_date_string(occurred_on)
     @description     = description
     @budget_sheet_id = budget_sheet_id
     @history         = history
+  end
+
+  def invalid?
+    error_message.present?
+  end
+
+  def valid?
+    error_message.blank?
   end
 
   def negative?
@@ -25,6 +34,8 @@ class EntryCSVRow
   def to_a
     [ amount_in_cents, occurred_on, description, budget_sheet_id ]
   end
+
+  attr_reader :error_message
 
   private
 
@@ -48,7 +59,8 @@ class EntryCSVRow
 
   def parse_date_string(date)
     Date.strptime(date, "%m/%d/%Y")
-  rescue => e
-    raise ArgumentError, "invalid date format for #{date}, please use MM/DD/YYYY"
+  rescue ArgumentError, TypeError
+    @error_message = "Invalid date format for #{date}, please use MM/DD/YYYY"
+    nil
   end
 end

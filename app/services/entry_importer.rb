@@ -13,9 +13,10 @@ class EntryImporter
     return false unless csv_valid?
 
     entry_rows = extract_entry_rows_from_csv
+    return false if error_messages.any?
+
     import_result = import_entry_rows!(entry_rows)
     @entries = Entry.where(id: import_result.ids)
-
     csv.close
     true
   end
@@ -45,7 +46,11 @@ class EntryImporter
         history: history
       )
 
-      entry_rows << entry_row.to_a if entry_row.negative? && entry_row.unique?
+      if entry_row.valid?
+        entry_rows << entry_row if entry_row.negative? && entry_row.unique?
+      else
+        error_messages << entry_row.error_message
+      end
     end
 
     entry_rows
@@ -54,7 +59,7 @@ class EntryImporter
   def import_entry_rows!(entry_rows)
     Entry.import(
       %i(amount occurred_on description budget_sheet_id),
-      entry_rows,
+      entry_rows.map(&:to_a),
       validate: false
     )
   end

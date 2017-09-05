@@ -27,6 +27,37 @@ describe EntryCSVRow do
     end
   end
 
+  describe "#invalid?" do
+    it "returns true when an invalid occurred_on date is passed" do
+      service = EntryCSVRow.new(
+        amount: "4.32",
+        occurred_on: "12-12-2012",
+        description: "Gas Station",
+        budget_sheet_id: nil,
+        history: {}
+      )
+
+      expect(service.invalid?).to eq(true)
+    end
+  end
+
+  describe "error_message" do
+    it "contains a message when an invalid occurred_on date is passed" do
+      invalid_date = "12-12-2012"
+      service = EntryCSVRow.new(
+        amount: "4.32",
+        occurred_on: invalid_date,
+        description: "Gas Station",
+        budget_sheet_id: nil,
+        history: {}
+      )
+
+      expect(service.error_message).to eq(
+        "Invalid date format for #{invalid_date}, please use MM/DD/YYYY"
+      )
+    end
+  end
+
   describe "#unique?" do
     it "returns true when no other entry amounts are the same" do
       history = {
